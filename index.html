@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmos Girl</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Poppins:wght@300;400;500;600&family=Vazirmatn:wght@400;500;600;700&family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deep: #170F2E;
+    --mid: #2C1B52;
+    --violet: #6C4FA8;
+    --pink: #F2A7D8;
+    --gold: #FBD98A;
+    --ink: #F4EFFF;
+    --ink-soft: #C9BEE6;
+    --glass: rgba(255,255,255,0.055);
+    --glass-b: rgba(255,255,255,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(242,167,216,0.18), transparent 60%),
+      radial-gradient(ellipse 50% 35% at 85% 15%, rgba(251,217,138,0.10), transparent 60%),
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(108,79,168,0.35), transparent 70%),
+      linear-gradient(180deg, var(--deep) 0%, var(--mid) 55%, #1C1140 100%);
+    color:var(--ink);
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
+    position:relative;
+  }
+  #stars, #stars2, #stars3{
+    position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:0;
+  }
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    position:relative;
+    z-index:2;
+    padding-bottom:60px;
+  }
+  .hero{
+    height:210px;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba(242,167,216,0.35), transparent 55%),
+      radial-gradient(ellipse at 75% 60%, rgba(251,217,138,0.22), transparent 50%),
+      linear-gradient(135deg, #2A1B52 0%, #472A6E 50%, #6B3F7A 100%);
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      radial-gradient(2px 2px at 15% 30%, #fff, transparent),
+      radial-gradient(2px 2px at 40% 65%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 65% 20%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 85% 55%, #fff, transparent),
+      radial-gradient(2px 2px at 92% 25%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 25% 80%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 55% 45%, #fff, transparent);
+    opacity:0.85;
+    animation: twinkle 4s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle{ from{opacity:0.5;} to{opacity:1;} }
+  .moon{
+    position:absolute; top:28px; right:48px;
+    width:56px; height:56px; border-radius:50%;
+    background: radial-gradient(circle at 35% 35%, #FFF6DE, var(--gold) 70%);
+    box-shadow: 0 0 40px 6px rgba(251,217,138,0.55);
+  }
+  .avatar-frame{
+    width:150px; height:150px; border-radius:50%;
+    margin:-75px auto 0;
+    position:relative;
+    padding:5px;
+    background:conic-gradient(from 0deg, var(--pink), var(--gold), var(--violet), var(--pink));
+    animation: spin 12s linear infinite;
+    z-index:3;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .avatar-inner{
+    width:100%; height:100%; border-radius:50%;
+    background: radial-gradient(circle at 40% 35%, #4A3178, #1E1240 75%);
+    display:flex; align-items:center; justify-content:center;
+    animation: spin-rev 12s linear infinite;
+    overflow:hidden;
+  }
+  @keyframes spin-rev{ to{ transform:rotate(-360deg); } }
+  .avatar-inner svg{ width:78%; height:78%; }
+  .status-dot{
+    position:absolute; bottom:8px; right:calc(50% - 68px);
+    width:18px; height:18px; border-radius:50%;
+    background:#7CF29C; border:3px solid var(--deep);
+    z-index:4;
+  }
+  .card{
+    text-align:center;
+    padding:22px 30px 10px;
+  }
+  .name{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:2.6rem;
+    letter-spacing:0.5px;
+    margin:6px 0 2px;
+    background:linear-gradient(90deg, var(--pink), var(--gold));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .title{
+    color:var(--ink-soft);
+    font-size:0.95rem;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .langs{
+    display:flex; justify-content:center; gap:8px; margin-bottom:26px;
+  }
+  .lang-btn{
+    background:var(--glass); border:1px solid var(--glass-b);
+    color:var(--ink-soft); padding:7px 18px; border-radius:999px;
+    font-size:0.8rem; letter-spacing:1px; cursor:pointer;
+    font-family:'Poppins',sans-serif; transition:all .25s ease;
+  }
+  .lang-btn.active{
+    background:linear-gradient(90deg, var(--pink), var(--violet));
+    color:#1E1240; font-weight:600; border-color:transparent;
+  }
+  .bio{ text-align:right; margin-bottom:8px; }
+  .bio p{
+    color:var(--ink-soft); line-height:1.9; font-size:0.98rem;
+    margin:0 0 16px;
+    text-align:justify;
+  }
+  [dir="ltr"] .bio p, [dir="ltr"] .bio{ text-align:left; }
+  .fa .bio p, .fa .name-alt{ font-family:'Vazirmatn', sans-serif; }
+  .ko .bio p{ font-family:'Noto Sans KR', sans-serif; font-weight:300; }
+  .ko .name-alt{ font-family:'Gowun Batang', serif; }
+  .en .bio p{ font-family:'Poppins', sans-serif; }
+
+  .section{ padding:6px 30px 0; }
+  .section-title{
+    display:flex; align-items:center; gap:10px;
+    font-size:0.75rem; letter-spacing:2.5px; text-transform:uppercase;
+    color:var(--gold); margin:28px 0 18px;
+  }
+  .section-title::after{
+    content:''; flex:1; height:1px;
+    background:linear-gradient(90deg, var(--glass-b), transparent);
+  }
+  .skill{ margin-bottom:16px; }
+  .skill-top{
+    display:flex; justify-content:space-between; font-size:0.9rem;
+    margin-bottom:6px; color:var(--ink);
+  }
+  .skill-top span:last-child{ color:var(--pink); font-weight:600; }
+  .bar-bg{
+    height:6px; border-radius:6px; background:var(--glass);
+    border:1px solid var(--glass-b); overflow:hidden;
+  }
+  .bar-fill{
+    height:100%; border-radius:6px;
+    background:linear-gradient(90deg, var(--violet), var(--pink), var(--gold));
+    width:0%;
+    transition:width 1.4s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .player{
+    margin:34px 24px 0; padding:18px 20px;
+    background:var(--glass); border:1px solid var(--glass-b);
+    border-radius:18px;
+    backdrop-filter: blur(6px);
+  }
+  .player-top{ display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+  .disc{
+    width:52px; height:52px; border-radius:50%; flex-shrink:0;
+    background:radial-gradient(circle at 50% 50%, #12081F 0 18%, #3A245F 19% 40%, #12081F 41% 100%);
+    border:2px solid var(--glass-b);
+    animation: spin 5s linear infinite paused;
+  }
+  .disc.playing{ animation-play-state:running; }
+  .track-name{ font-weight:500; font-size:0.98rem; }
+  .track-artist{ font-size:0.8rem; color:var(--ink-soft); }
+  .progress-row{ display:flex; align-items:center; gap:10px; font-size:0.72rem; color:var(--ink-soft); }
+  .progress-bg{ flex:1; height:4px; border-radius:4px; background:var(--glass-b); cursor:pointer; }
+  .progress-fill{ height:100%; width:0%; border-radius:4px; background:linear-gradient(90deg,var(--pink),var(--gold)); }
+  .controls{ display:flex; justify-content:center; align-items:center; gap:22px; margin-top:14px; }
+  .ctrl-btn{
+    background:none; border:none; color:var(--ink); cursor:pointer;
+    opacity:0.75; transition:opacity .2s, transform .2s;
+  }
+  .ctrl-btn:hover{ opacity:1; transform:scale(1.08); }
+  .play-main{
+    width:48px; height:48px; border-radius:50%;
+    background:linear-gradient(135deg, var(--pink), var(--violet));
+    display:flex; align-items:center; justify-content:center;
+    opacity:1;
+  }
+
+  .socials{
+    display:flex; justify-content:center; gap:16px; margin:34px 0 18px;
+  }
+  .social-btn{
+    width:42px; height:42px; border-radius:50%;
+    background:var(--glass); border:1px solid var(--glass-b);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink-soft); transition:all .25s;
+  }
+  .social-btn:hover{ color:var(--deep); background:linear-gradient(135deg,var(--pink),var(--gold)); }
+  .footer-note{
+    text-align:center; font-size:0.75rem; color:var(--ink-soft); opacity:0.6;
+    letter-spacing:0.5px;
+  }
+  @media (max-width:480px){
+    .name{font-size:2.1rem;}
+    .section, .card{padding-left:18px; padding-right:18px;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="moon"></div>
+  </div>
+
+  <div class="avatar-frame">
+    <div class="avatar-inner">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="silh" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#F2A7D8"/>
+            <stop offset="100%" stop-color="#6C4FA8"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="38" r="17" fill="url(#silh)"/>
+        <path d="M20 90 Q20 55 50 55 Q80 55 80 90 Z" fill="url(#silh)"/>
+        <circle cx="20" cy="20" r="1.6" fill="#FBD98A"/>
+        <circle cx="80" cy="15" r="1.2" fill="#FBD98A"/>
+        <circle cx="85" cy="70" r="1.4" fill="#FBD98A"/>
+        <circle cx="12" cy="65" r="1.4" fill="#FBD98A"/>
+        <circle cx="70" cy="8" r="1" fill="#FBD98A"/>
+      </svg>
+    </div>
+  </div>
+  <div class="status-dot"></div>
+
+  <div class="card">
+    <div class="name" id="displayName">Cosmos Girl</div>
+    <div class="title" id="displayTitle">Artist</div>
+
+    <div class="langs">
+      <button class="lang-btn" data-lang="fa">فارسی</button>
+      <button class="lang-btn active" data-lang="en">English</button>
+      <button class="lang-btn" data-lang="ko">한국어</button>
+    </div>
+
+    <div class="bio en" id="bioBlock">
+      <p data-en="true">I make music that feels like drifting between galaxies — soft, glowing, a little out of this world. Every track starts as a quiet feeling before it becomes sound.</p>
+      <p data-en="true">My style blends dreamy vocals with cinematic textures, pulling from pop, R&amp;B, and ambient soundscapes to build something that feels both intimate and vast.</p>
+      <p data-en="true">I write in the space between languages and cultures, because feelings don't need translation — they only need the right melody.</p>
+      <p data-en="true">This page is home base: my music, my world, and the little universe I'm building one song at a time.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title" id="talentsTitle">Talents</div>
+
+    <div class="skill"><div class="skill-top"><span data-t="vocals">Vocals</span><span>92%</span></div><div class="bar-bg"><div class="bar-fill" data-w="92"></div></div></div>
+    <div class="skill"><div class="skill-top"><span data-t="songwriting">Songwriting</span><span>88%</span></div><div class="bar-bg"><div class="bar-fill" data-w="88"></div></div></div>
+    <div class="skill"><div class="skill-top"><span data-t="dance">Dance</span><span>80%</span></div><div class="bar-bg"><div class="bar-fill" data-w="80"></div></div></div>
+
+    <div class="section-title" id="langsTitle">Languages</div>
+    <div class="skill"><div class="skill-top"><span data-t="persian">Persian</span><span>100%</span></div><div class="bar-bg"><div class="bar-fill" data-w="100"></div></div></div>
+    <div class="skill"><div class="skill-top"><span data-t="english2">English</span><span>90%</span></div><div class="bar-bg"><div class="bar-fill" data-w="90"></div></div></div>
+    <div class="skill"><div class="skill-top"><span data-t="korean">Korean</span><span>75%</span></div><div class="bar-bg"><div class="bar-fill" data-w="75"></div></div></div>
+  </div>
+
+  <div class="player">
+    <div class="player-top">
+      <div class="disc" id="disc"></div>
+      <div>
+        <div class="track-name">Lifestyle</div>
+        <div class="track-artist">Cosmos Girl</div>
+      </div>
+    </div>
+    <div class="progress-row">
+      <span id="curTime">0:00</span>
+      <div class="progress-bg" id="progressBg"><div class="progress-fill" id="progressFill"></div></div>
+      <span id="durTime">0:00</span>
+    </div>
+    <div class="controls">
+      <button class="ctrl-btn" id="prevBtn" aria-label="Restart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM20 6L9 12l11 6z"/></svg>
+      </button>
+      <button class="ctrl-btn play-main" id="playBtn" aria-label="Play">
+        <svg id="playIcon" width="20" height="20" viewBox="0 0 24 24" fill="#1E1240"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button class="ctrl-btn" id="nextBtn" aria-label="Volume">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg>
+      </button>
+    </div>
+    <audio id="audio" src="theme.m4a" preload="metadata"></audio>
+  </div>
+
+  <div class="socials">
+    <a class="social-btn" href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.7 0 3 .01 4.1.06 1.1.05 1.8.22 2.4.46.6.24 1.1.56 1.6 1.06.5.5.82 1 .1.06.24.6.41 1.3.46 2.4C20.99 9 21 9.3 21 12s-.01 3-.06 4.1c-.05 1.1-.22 1.8-.46 2.4a4.3 4.3 0 0 1-1.06 1.6 4.3 4.3 0 0 1-1.6 1.06c-.6.24-1.3.41-2.4.46-1.1.05-1.4.06-4.1.06s-3-.01-4.1-.06c-1.1-.05-1.8-.22-2.4-.46a4.3 4.3 0 0 1-1.6-1.06 4.3 4.3 0 0 1-1.06-1.6c-.24-.6-.41-1.3-.46-2.4C3.01 15 3 14.7 3 12s.01-3 .06-4.1c.05-1.1.22-1.8.46-2.4.24-.6.56-1.1 1.06-1.6.5-.5 1-.82 1.6-1.06.6-.24 1.3-.41 2.4-.46C9 2.01 9.3 2 12 2zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.3-8.4a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></svg></a>
+    <a class="social-btn" href="#" aria-label="Spotify"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4a.7.7 0 0 1-.96.24c-2.6-1.6-5.9-1.96-9.8-1.07a.7.7 0 1 1-.3-1.36c4.24-.97 7.9-.55 10.8 1.24.34.2.45.65.26.95zm1.2-2.7a.86.86 0 0 1-1.18.28c-3-1.83-7.56-2.37-11.1-1.3a.86.86 0 1 1-.5-1.65c4.05-1.23 9.08-.63 12.5 1.46.4.25.53.78.28 1.2zm.1-2.8C14.6 8.7 9 8.5 5.7 9.55a1.03 1.03 0 1 1-.6-1.97c3.8-1.2 10-1 13.9 1.3a1.03 1.03 0 1 1-1.1 1.74z"/></svg></a>
+    <a class="social-btn" href="#" aria-label="Telegram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.3 2.7 11.6c-1 .4-1 1.7.1 2l4.7 1.5 1.8 5.6c.2.7 1.1.9 1.6.3l2.6-2.9 4.9 3.6c.8.6 1.9.2 2.1-.8l3.4-15.6c.3-1.1-.8-2-1.9-1.6zM8.6 15.3l-1.1 3.4-1-3.1 10.4-9.3z"/></svg></a>
+  </div>
+
+  <div class="footer-note">© 2026 Cosmos Girl. All rights reserved.</div>
+
+</div>
+
+<script>
+// Starfield background
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+function resize(){ canvas.width = window.innerWidth; canvas.height = document.body.scrollHeight; }
+resize();
+window.addEventListener('resize', resize);
+const stars = Array.from({length: 140}, () => ({
+  x: Math.random()*canvas.width,
+  y: Math.random()*canvas.height,
+  r: Math.random()*1.4 + 0.2,
+  s: Math.random()*0.02 + 0.005,
+  o: Math.random()
+}));
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(const st of stars){
+    st.o += st.s;
+    const op = (Math.sin(st.o)+1)/2 * 0.8 + 0.2;
+    ctx.beginPath();
+    ctx.arc(st.x, st.y, st.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,255,255,${op})`;
+    ctx.fill();
+  }
+  requestAnimationFrame(draw);
+}
+draw();
+
+// Animate skill bars on load
+window.addEventListener('load', () => {
+  document.querySelectorAll('.bar-fill').forEach(b => {
+    setTimeout(()=>{ b.style.width = b.dataset.w + '%'; }, 200);
+  });
+});
+
+// Language content
+const content = {
+  en: {
+    name: 'Cosmos Girl', title: 'Artist', talents: 'Talents', langsT: 'Languages',
+    dir: 'ltr', cls: 'en',
+    bio: [
+      "I make music that feels like drifting between galaxies — soft, glowing, a little out of this world. Every track starts as a quiet feeling before it becomes sound.",
+      "My style blends dreamy vocals with cinematic textures, pulling from pop, R&B, and ambient soundscapes to build something that feels both intimate and vast.",
+      "I write in the space between languages and cultures, because feelings don't need translation — they only need the right melody.",
+      "This page is home base: my music, my world, and the little universe I'm building one song at a time."
+    ],
+    labels: {vocals:'Vocals', songwriting:'Songwriting', dance:'Dance', persian:'Persian', english2:'English', korean:'Korean'}
+  },
+  fa: {
+    name: 'دختر کهکشان', title: 'خواننده و ترانه‌سرا', talents: 'استعدادها', langsT: 'زبان‌ها',
+    dir: 'rtl', cls: 'fa',
+    bio: [
+      "موسیقی من حس شناور شدن میان کهکشان‌هاست؛ نرم، درخشان و کمی فراتر از این دنیا. هر آهنگ از یک احساس ساکت شروع می‌شود، پیش از آن‌که به صدا تبدیل شود.",
+      "سبک من ترکیبی از صدای رویاگونه و بافت‌های سینمایی است؛ الهام‌گرفته از پاپ، آر‌اندبی و صداهای محیطی برای ساختن چیزی که هم صمیمی و هم بی‌کران باشد.",
+      "من در فاصله‌ی میان زبان‌ها و فرهنگ‌ها می‌نویسم، چون احساس نیازی به ترجمه ندارد، فقط به ملودی درست نیاز دارد.",
+      "این صفحه خانه‌ی من است: موسیقی‌ام، دنیای من و کهکشان کوچکی که آهنگ به آهنگ می‌سازم."
+    ],
+    labels: {vocals:'خوانندگی', songwriting:'ترانه‌سرایی', dance:'رقص', persian:'فارسی', english2:'انگلیسی', korean:'کره‌ای'}
+  },
+  ko: {
+    name: '코스모스 걸', title: '아티스트', talents: '재능', langsT: '언어',
+    dir: 'ltr', cls: 'ko',
+    bio: [
+      "저는 은하 사이를 떠도는 듯한 음악을 만들어요 — 부드럽고, 은은히 빛나며, 조금은 비현실적인. 모든 곡은 소리가 되기 전에 조용한 감정에서 시작됩니다.",
+      "몽환적인 보컬과 영화 같은 사운드를 결합해 팝, 알앤비, 앰비언트를 넘나들며 친밀하면서도 광활한 느낌을 만들어냅니다.",
+      "언어와 문화 사이의 공간에서 글을 씁니다. 감정은 번역이 필요 없고, 그저 맞는 멜로디만 있으면 되니까요.",
+      "이 페이지는 저의 본거지예요 — 제 음악, 제 세계, 그리고 한 곡씩 만들어가는 작은 우주."
+    ],
+    labels: {vocals:'보컬', songwriting:'작사 작곡', dance:'댄스', persian:'페르시아어', english2:'영어', korean:'한국어'}
+  }
+};
+
+function setLang(lang){
+  const c = content[lang];
+  document.getElementById('displayName').textContent = c.name;
+  document.getElementById('displayTitle').textContent = c.title;
+  document.getElementById('talentsTitle').textContent = c.talents;
+  document.getElementById('langsTitle').textContent = c.langsT;
+
+  const bioBlock = document.getElementById('bioBlock');
+  bioBlock.className = 'bio ' + c.cls;
+  bioBlock.setAttribute('dir', c.dir);
+  bioBlock.innerHTML = c.bio.map(p => `<p>${p}</p>`).join('');
+
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.dataset.t;
+    if(c.labels[key]) el.textContent = c.labels[key];
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+
+// Audio player
+const audio = document.getElementById('audio');
+const playBtn = document.getElementById('playBtn');
+const playIcon = document.getElementById('playIcon');
+const disc = document.getElementById('disc');
+const progressBg = document.getElementById('progressBg');
+const progressFill = document.getElementById('progressFill');
+const curTime = document.getElementById('curTime');
+const durTime = document.getElementById('durTime');
+
+function fmt(t){
+  if(!isFinite(t)) return '0:00';
+  const m = Math.floor(t/60), s = Math.floor(t%60);
+  return `${m}:${s.toString().padStart(2,'0')}`;
+}
+audio.addEventListener('loadedmetadata', () => { durTime.textContent = fmt(audio.duration); });
+audio.addEventListener('timeupdate', () => {
+  curTime.textContent = fmt(audio.currentTime);
+  progressFill.style.width = (audio.currentTime/audio.duration*100 || 0) + '%';
+});
+playBtn.addEventListener('click', () => {
+  if(audio.paused){
+    audio.play();
+    disc.classList.add('playing');
+    playIcon.innerHTML = '<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>';
+  } else {
+    audio.pause();
+    disc.classList.remove('playing');
+    playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  }
+});
+document.getElementById('prevBtn').addEventListener('click', () => { audio.currentTime = 0; });
+progressBg.addEventListener('click', (e) => {
+  const rect = progressBg.getBoundingClientRect();
+  const ratio = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = ratio * audio.duration;
+});
+</script>
+
+</body>
+</html>
